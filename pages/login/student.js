@@ -43,41 +43,80 @@ function Login() {
               lg="6"
               className="order-2 order-lg-1 d-flex flex-column align-items-center"
             >
-              <MDBBtn
-                onClick={() => {
-                  router.push("/login/student");
-                }}
-                className="mb-4"
-                size="lg"
-              >
-                Login with student
-              </MDBBtn>
+              <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
+                Student login
+              </p>
 
+              <div className="d-flex flex-row align-items-center mb-4">
+                <MDBIcon fas icon="envelope me-3" size="lg" />
+                <MDBInput
+                  value={account}
+                  onChange={(e) => setAccount(e.target.value)}
+                  label="Your Account"
+                  id="form2"
+                  type="text"
+                />
+              </div>
+
+              <div className="d-flex flex-row align-items-center mb-4">
+                <MDBIcon fas icon="lock me-3" size="lg" />
+                <MDBInput
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  label="Password"
+                  id="form3"
+                  type="password"
+                />
+              </div>
+              <div>
+                <ForgotPassword />
+              </div>
               <br />
-              <div className="">You{"'"}re teacher?</div>
-              <br />
+
               <MDBBtn
-                onClick={() => {
-                  router.push("/login/teacher");
+                onClick={async () => {
+                  try {
+                    const result = await login(account, password);
+                    if (result?.exist === true) {
+                      if (result?.role === 1) {
+                        swal("Notice", "Login is succsessfully", "success")
+                          .then(() => {
+                            Cookies.set("uid", result?.uid);
+                            Cookies.set("role", result?.role);
+                            Cookies.set("sid", result?.sid);
+                          })
+
+                          .then(
+                            () =>
+                              (window.location.href =
+                                window.location.origin + "/student")
+                          );
+                      }
+                    } else {
+                      swal("Notice", "Account is not exist", "error");
+                    }
+                  } catch (error) {
+                    swal("Notice", "Error unknown", "error");
+                  }
                 }}
                 className="mb-4"
                 size="lg"
               >
-                Login with teacher
+                Login 
               </MDBBtn>
               <br />
-              <br />
-              <div className="">You{"'"}re admin?</div>
+              <div className="">You{"'"}re not an account?</div>
               <br />
               <MDBBtn
                 onClick={() => {
-                  router.push("/login/admin");
+                  router.push("/signup");
                 }}
                 className="mb-4"
                 size="lg"
               >
-                Login with admin
+                Signup
               </MDBBtn>
+              
             </MDBCol>
 
             <MDBCol

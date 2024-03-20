@@ -24,25 +24,25 @@ const TeacherManageStudents = () => {
 };
 
 function StudentData() {
-  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  const startOfWeek = moment().startOf('week');
-  const endOfWeek = moment().endOf('week');
+  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const startOfWeek = moment().startOf("week");
+  const endOfWeek = moment().endOf("week");
   const weekDays = [];
   let day = startOfWeek;
   while (day <= endOfWeek) {
     weekDays.push(day);
-    day = day.clone().add(1, 'd');
+    day = day.clone().add(1, "d");
   }
   const [data, setData] = React.useState([]);
   const [change, setChange] = React.useState([]);
-  const router = useRouter()
-  const { id, course_id } = router.query
+  const router = useRouter();
+  const { id, course_id } = router.query;
   //   console.log(id)
   React.useEffect(() => {
     (async () => {
       // uid teacher
       if (id) {
-        const result = await get_schedule_class_subject(id, course_id)
+        const result = await get_schedule_class_subject(id, course_id);
         setData(result);
       }
     })();
@@ -54,47 +54,240 @@ function StudentData() {
       <br />
       <div></div>
       <div style={{ width: "100%" }} className={"wrap__schedule"}>
-        <div style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
-          <div style={{ flex: "1 1 0", border: "1px solid #000", height: 40, display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <div
+            style={{
+              flex: "1 1 0",
+              border: "1px solid #000",
+              height: 40,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             Day
-          </div>  
+          </div>
           {weekDays.map((day, index) => (
-            <div style={{ flex: "1 1 0", border: "1px solid #000", height: 40, display: "flex", justifyContent: "center", alignItems: "center"}} key={index}>{days[day.day()]} - {day.format('DD/MM/YYYY')}</div>
+            <div
+              style={{
+                flex: "1 1 0",
+                border: "1px solid #000",
+                height: 40,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              key={index}
+            >
+              {days[day.day()]} - {day.format("DD/MM/YYYY")}
+            </div>
           ))}
         </div>
 
         {/* Shift 1 */}
-        <div style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
-          <div style={{ flex: "1 1 0", height: 100, padding: "20px 10px", border: "1px solid #000" , display: "flex", justifyContent: "center", alignItems: "center"}}>
-              Morning
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <div
+            style={{
+              flex: "1 1 0",
+              height: 100,
+              padding: "20px 10px",
+              border: "1px solid #000",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            Morning
           </div>
           {weekDays.map((day, index) => (
-            <div style={{ flex: "1 1 0", height: 100, padding: "20px 10px", border: "1px solid #000" }} key={index}>
-              {data?.filter(item => item?.day_schedule === day.format("DD/MM/YYYY") && parseInt(item?.shift) === 1)?.length > 0 && <div>peirod {data?.filter(item => item?.day_schedule === day.format("DD/MM/YYYY") && item?.shift === 1)?.[0]?.time_start} - {data?.filter(item => item?.day_schedule === day.format("DD/MM/YYYY") && item?.shift === 1)?.[0]?.time_end} ({data?.filter(item => item?.day_schedule === day.format("DD/MM/YYYY") && item?.shift === 1)?.[0]?.course_name})</div>}
+            <div
+              style={{
+                flex: "1 1 0",
+                height: 100,
+                padding: "20px 10px",
+                border: "1px solid #000",
+              }}
+              key={index}
+            >
+              {data?.filter(
+                (item) =>
+                  item?.day_schedule === day.format("DD/MM/YYYY") &&
+                  parseInt(item?.shift) === 1
+              )?.length > 0 && (
+                <div>
+                  peirod{" "}
+                  {
+                    data?.filter(
+                      (item) =>
+                        item?.day_schedule === day.format("DD/MM/YYYY") &&
+                        item?.shift === 1
+                    )?.[0]?.time_start
+                  }{" "}
+                  -{" "}
+                  {
+                    data?.filter(
+                      (item) =>
+                        item?.day_schedule === day.format("DD/MM/YYYY") &&
+                        item?.shift === 1
+                    )?.[0]?.time_end
+                  }{" "}
+                  (
+                  {
+                    data?.filter(
+                      (item) =>
+                        item?.day_schedule === day.format("DD/MM/YYYY") &&
+                        item?.shift === 1
+                    )?.[0]?.course_name
+                  }
+                  )
+                </div>
+              )}
             </div>
           ))}
         </div>
         {/* Shift 2 */}
-        <div style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
-          <div style={{flex: "1 1 0", height: 100, padding: "20px 10px", border: "1px solid #000", display: "flex", justifyContent: "center", alignItems: "center"  }}>
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <div
+            style={{
+              flex: "1 1 0",
+              height: 100,
+              padding: "20px 10px",
+              border: "1px solid #000",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             Afternoon
           </div>
           {weekDays.map((day, index) => (
-            <div style={{ flex: "1 1 0", height: 100, padding: "20px 10px", border: "1px solid #000" }} key={index}>
-              {data?.filter(item => item?.day_schedule === day.format("DD/MM/YYYY") && item?.shift === 2)?.length > 0 && <div>Hello World2</div>}
-
+            <div
+              style={{
+                flex: "1 1 0",
+                height: 100,
+                padding: "20px 10px",
+                border: "1px solid #000",
+              }}
+              key={index}
+            >
+              {data?.filter(
+                (item) =>
+                  item?.day_schedule === day.format("DD/MM/YYYY") &&
+                  item?.shift === 2
+              )?.length > 0 &&  <div>
+              peirod{" "}
+              {
+                data?.filter(
+                  (item) =>
+                    item?.day_schedule === day.format("DD/MM/YYYY") &&
+                    item?.shift === 2
+                )?.[0]?.time_start
+              }{" "}
+              -{" "}
+              {
+                data?.filter(
+                  (item) =>
+                    item?.day_schedule === day.format("DD/MM/YYYY") &&
+                    item?.shift === 2
+                )?.[0]?.time_end
+              }{" "}
+              (
+              {
+                data?.filter(
+                  (item) =>
+                    item?.day_schedule === day.format("DD/MM/YYYY") &&
+                    item?.shift === 2
+                )?.[0]?.course_name
+              }
+              )
+            </div>}
             </div>
           ))}
         </div>
         {/* Shift 3 */}
-        <div style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
-          <div style={{ flex: "1 1 0", height: 100, padding: "20px 10px", border: "1px solid #000"  , display: "flex", justifyContent: "center", alignItems: "center"}}>
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <div
+            style={{
+              flex: "1 1 0",
+              height: 100,
+              padding: "20px 10px",
+              border: "1px solid #000",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             Evening
           </div>
           {weekDays.map((day, index) => (
-            <div style={{ flex: "1 1 0", height: 100, padding: "20px 10px", border: "1px solid #000" }} key={index}>
-              {data?.filter(item => item?.day_schedule === day.format("DD/MM/YYYY") && item?.shift === 3)?.length > 0 && <div>Hello World3</div>}
-
+            <div
+              style={{
+                flex: "1 1 0",
+                height: 100,
+                padding: "20px 10px",
+                border: "1px solid #000",
+              }}
+              key={index}
+            >
+              {data?.filter(
+                (item) =>
+                  item?.day_schedule === day.format("DD/MM/YYYY") &&
+                  item?.shift === 3
+              )?.length > 0 &&  <div>
+              peirod{" "}
+              {
+                data?.filter(
+                  (item) =>
+                    item?.day_schedule === day.format("DD/MM/YYYY") &&
+                    item?.shift === 3
+                )?.[0]?.time_start
+              }{" "}
+              -{" "}
+              {
+                data?.filter(
+                  (item) =>
+                    item?.day_schedule === day.format("DD/MM/YYYY") &&
+                    item?.shift === 3
+                )?.[0]?.time_end
+              }{" "}
+              (
+              {
+                data?.filter(
+                  (item) =>
+                    item?.day_schedule === day.format("DD/MM/YYYY") &&
+                    item?.shift === 3
+                )?.[0]?.course_name
+              }
+              )
+            </div>}
             </div>
           ))}
         </div>

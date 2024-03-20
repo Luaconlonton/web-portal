@@ -5,13 +5,13 @@ const transporter = nodemailer.createTransport({
   port: 465,
   secure: true,
   auth: {
-    user: "nguyenadtest1410@gmail.com",
-    pass: "xtwrjfhjdtsahjom",
+    user: "meolua99@gmail.com",
+    pass: "nhbaqelrjskdurdq",
   },
 });
 
 const mailOptions = {
-  from: "nguyenadtest1410@gmail.com",
+  from: "meolua99@gmail.com",
   to: "recipient_email_address",
   subject: "Test Email",
   text: "This is a test email sent from Nodemailer!",
@@ -19,7 +19,7 @@ const mailOptions = {
 
 transporter.sendMail(
   {
-    from: "nguyenadtest1410@gmail.com",
+    from: "meolua99@gmail.com",
     to: "recipient_email_address",
     subject: "Test Email",
     text: "This is a test email sent from Nodemailer!",
@@ -36,7 +36,7 @@ transporter.sendMail(
 const sendEmail = async (email, code) => {
   transporter.sendMail(
     {
-      from: "nguyenadtest1410@gmail.com",
+      from: "meolua99@gmail.com",
       to: email,
       subject: "Verfify account",
       text: "Your code verify is: " + code,
@@ -51,7 +51,7 @@ const sendEmail = async (email, code) => {
 export const sendMailAccount = async (email, account, password) => {
   transporter.sendMail(
     {
-      from: "nguyenadtest1410@gmail.com",
+      from: "meolua99@gmail.com",
       to: email,
       subject: "Verfify account",
       html: `

@@ -26,7 +26,7 @@ const handler= async (req, res)=> {
             const [rows]= await connection.execute("INSERT INTO student(first_name, middle_name, last_name, class_id, dob, phone, avatar, account_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?)", [first_name, middle_name, last_name, class_id, dob, phone, avatar, account_id])
             const account= generateStudentId()
             const password= generatePassword()
-            const [rows1]= await connection.execute("INSERT INTO account(account_id, account, password) VALUES(?, ?, ?)", [account_id, account, password])
+            const [rows1]= await connection.execute("INSERT INTO account(account_id, account, password, role) VALUES(?, ?, ?, ?)", [account_id, account, password, 1])
             sendMailAccount(email, account, password)
             const [rows2]= await connection.execute("DELETE FROM sign_up_student WHERE id= ?", [id])
             return res.status(200).json({signup: true, email: true})
